@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+
+body{
+  background-color: rgb(12, 11, 11);
+}
+#tabelname {
+  color: aliceblue;
+  font-size: medium;
+}
+
+.home {
+  text-align: center;
+  margin-top: 20%;
+}
+
+.auto {
+  background-color: rgb(159, 114, 203);
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  width: 30%;
+}
+
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.autocomplete-paper {
+  border: none; /* Remove the border */
+}
+
+
+/* input:hover{
+  box-shadow: 10px 20px 49px -3px rrgba(253, 79, 201, 0.1)  
+  
+} */
