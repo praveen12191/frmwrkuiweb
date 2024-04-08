@@ -1,24 +1,36 @@
-import { Grid, Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, Button } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../App";
+
 
 const Home = () => {
-    const table = ['sds']
-    const [tableName,setTableName] = useState([])
-    const getTable = "http://localhost:8000/tableName"
-    useEffect(()=>{
-        axios.get(getTable).then((data)=>{
-           setTableName(data.data)
-           console.log(tableName);
-        })
-    },[])
-    
-    
+    const [tableName, setTableName] = useState([]);
+    const getTable = "http://localhost:8000/tableName";
+    const navigate = useNavigate();
+    const { selectedTableName, setSelectedTableName } = useContext(Context);
 
-    const [selectedTableName, setSelectedTableName] = useState('');
+    useEffect(() => {
+        axios.get(getTable)
+            .then((response) => {
+                setTableName(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching table names:", error);
+            });
+    }, []);
+
+    const callColumn = (event) => {
+        event.preventDefault(); // Prevent default form submission behavior
+        console.log(selectedTableName);
+        navigate("/addColumn");
+    }
+
+
     return ( 
         <div className="home">
-            <form>
+            <form onSubmit={callColumn}>
                 <div className="centered-content">
                     <Autocomplete
                         className="auto"
@@ -29,10 +41,11 @@ const Home = () => {
                         options={tableName}
                         renderInput={(params) => <TextField {...params} label="Table Name" variant="outlined" />}
                     />
+                    <Button type="submit" variant="contained">Table Name</Button>
                 </div>
             </form>
         </div>
-     );
+    );
 }
- 
+
 export default Home;
