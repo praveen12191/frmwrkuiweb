@@ -4,6 +4,7 @@ import Home from './components/Home';
 import AddColumn from './components/AddColumn';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createContext, useEffect, useState } from "react"
+import ViewTable from './components/ViewTable';
 export const Context = createContext()
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/addColumn" element={<AddColumn />} />
+          <Route path="/viewTable" element={<ViewTable />} />
         </Routes>
       </div>
     </BrowserRouter>

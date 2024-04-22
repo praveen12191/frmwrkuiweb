@@ -39,7 +39,7 @@
 
 
 body{
-  background-color: rgb(252, 250, 250);
+  background-color: rgb(250, 241, 241);
 }
 #tabelname {
   color: aliceblue;
@@ -52,15 +52,16 @@ body{
 }
 
 .auto {
-
   border-radius: 10px;
   padding: 10px;
   border: none;
   outline: none;
-  width: 20%;
+  width: 35%;
+  /* background-color: #c58acd; */
 }
 
 .centered-content {
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,7 +76,31 @@ body{
 .autocomplete-paper {
   border: none; 
 }
-.lab{
-  background-color: rgb(159, 114, 203);
-  
+.hel{
+  margin-top: 20px;
+}
+
+.submit{
+  margin-top: 10%;
+  padding: 5px;
+  width: 10%;
+  cursor: pointer;
+}
+
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.custom-table th {
+  background-color: #f2f2f2;
 }

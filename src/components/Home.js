@@ -22,9 +22,14 @@ const Home = () => {
     }, []);
 
     const callColumn = (event) => {
-        event.preventDefault(); // Prevent default form submission behavior
+        event.preventDefault(); 
         console.log(selectedTableName);
         navigate("/addColumn");
+    }
+    const viewTable = (event)=>
+    {
+        event.preventDefault(); 
+        navigate("/viewTable");
     }
 
 
@@ -41,7 +46,10 @@ const Home = () => {
                         options={tableName}
                         renderInput={(params) => <TextField {...params} label="Table Name" variant="outlined" />}
                     />
-                    <Button type="submit" variant="contained">Table Name</Button>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <Button type="submit" variant="contained">Insert Value</Button>
+                        <Button onClick={viewTable} variant="contained">View Table</Button>
+                    </div>
                 </div>
             </form>
         </div>

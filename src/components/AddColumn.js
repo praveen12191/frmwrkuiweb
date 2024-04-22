@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../App";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const AddColumn = () => {
     const getTable = "http://localhost:8000/columnName";
@@ -10,13 +11,12 @@ const AddColumn = () => {
     const [columnNames, setColumnNames] = useState([]);
     const [rowData, setRowData] = useState([{ id: 0, values: {} }]); 
     const navigate = useNavigate();
-    const value = "sjhs"
 
     useEffect(() => {
         axios.post(getTable, { tablename: selectedTableName })
             .then((response) => {
                 console.log(response.data);
-                setColumnNames(response.data);
+                setColumnNames(response.data['column']);
             })
             .catch((error) => {
                 console.error("Error while fetching column names:", error);
@@ -49,25 +49,33 @@ const AddColumn = () => {
         ]);
     };
 
-   
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(rowData);
-        alert('Date added Successfully')
+        
         axios.post("http://localhost:8000/postdata",
         {
             values : rowData,
             tableName : selectedTableName
         })
             .then(response => {
-                console.log("Data sent successfully:", response.data);
+                if(response.status==202)
+                {
+                    alert(response.data['message'] + " on row " + response.data['Rowcount'])
+
+                }
+                else{
+                    console.log("Data sent successfully:", response.data);
+                    alert('Date added Successfully')
+                    navigate('/')
+                }
         
             })
             .catch(error => {
                 console.error("Error sending data:", error);
                 
             });
-        navigate('/')
+       
     };
     
     return (
@@ -83,7 +91,7 @@ const AddColumn = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {rowData.map(row => (
+                            {rowData.map((row, index) => (
                                 <tr key={row.id}>
                                     {columnNames.map(columnName => (
                                         <td key={columnName}>
@@ -93,11 +101,17 @@ const AddColumn = () => {
                                             />
                                         </td>
                                     ))}
+                                    {index === rowData.length - 1 && (
+                                        <td>
+                                            <Button type="button" onClick={handleAddRow}>
+                                                <AddCircleIcon />
+                                            </Button>
+                                        </td>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    <Button type="submit" variant="contained" onClick={handleAddRow}>Add Row</Button>
                     <Button type="submit" variant="contained">Submit</Button>
                 </div>
             </form>
