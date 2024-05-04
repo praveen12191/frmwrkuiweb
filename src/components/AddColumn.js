@@ -4,13 +4,15 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../App";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Toaster, toast } from 'sonner'
+
 
 const AddColumn = () => {
     const getTable = "http://localhost:8000/columnName";
     const { selectedTableName, setSelectedTableName } = useContext(Context);
     const [columnNames, setColumnNames] = useState([]);
     const [rowData, setRowData] = useState([{ id: 0, values: {} }]); 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         axios.post(getTable, { tablename: selectedTableName })
@@ -47,8 +49,8 @@ const AddColumn = () => {
             ...prevData,
             { id: newRowId, values: {} } // Add new row with empty values
         ]);
+        toast.info("hds")
     };
-
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(rowData);
@@ -59,27 +61,27 @@ const AddColumn = () => {
             tableName : selectedTableName
         })
             .then(response => {
-                if(response.status==202)
-                {
-                    alert(response.data['message'] + " on row " + response.data['Rowcount'])
-
-                }
-                else{
+                if(response.status === 202) {
+                    let val = response.data['message'] + " on row " + response.data['Rowcount']
+                    toast.error(val)
+    
+                } else {
                     console.log("Data sent successfully:", response.data);
-                    alert('Date added Successfully')
-                    navigate('/')
+                    toast.success('Data added')
+                    navigate('/');
+                   
                 }
-        
             })
             .catch(error => {
                 console.error("Error sending data:", error);
-                
+                toast.error('Someting went wrong')
             });
-       
     };
+    
     
     return (
         <div>
+             <Toaster position="top-right" richColors/>
             <form onSubmit={handleSubmit}>
                 <div className="centered-content">
                     <table>
@@ -104,6 +106,7 @@ const AddColumn = () => {
                                     {index === rowData.length - 1 && (
                                         <td>
                                             <Button type="button" onClick={handleAddRow}>
+                                               
                                                 <AddCircleIcon />
                                             </Button>
                                         </td>
@@ -113,8 +116,9 @@ const AddColumn = () => {
                         </tbody>
                     </table>
                     <Button type="submit" variant="contained">Submit</Button>
-                </div>
-            </form>
+                    </div>
+          
+                </form>
         </div>
     );
 };
