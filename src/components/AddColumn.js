@@ -2,23 +2,26 @@ import { TextField, Button } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../App";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Toaster, toast } from 'sonner'
-
+import { Toaster, toast } from 'sonner';
+import { Context } from "../App";
+import Autocomplete from '@mui/material/Autocomplete';
 
 const AddColumn = () => {
     const getTable = "http://localhost:8000/columnName";
-    const { selectedTableName, setSelectedTableName } = useContext(Context);
+    const { selectedTableName } = useContext(Context);
     const [columnNames, setColumnNames] = useState([]);
-    const [rowData, setRowData] = useState([{ id: 0, values: {} }]); 
+    const [rowData, setRowData] = useState([{ id: 0, values: {} }]);
+    const [suggestions, setSuggestions] = useState({});
+    const [key,setKeys] = useState([])
+    const [values,setValues] = useState([])
     const navigate = useNavigate(); 
 
     useEffect(() => {
         axios.post(getTable, { tablename: selectedTableName })
             .then((response) => {
-                console.log(response.data);
                 setColumnNames(response.data['column']);
+                setSuggestions(response.data['uniqueDate']); 
             })
             .catch((error) => {
                 console.error("Error while fetching column names:", error);
@@ -44,46 +47,68 @@ const AddColumn = () => {
     };
 
     const handleAddRow = () => {
-        const newRowId = rowData.length; // Generate new row id
+        const newRowId = rowData.length; 
         setRowData(prevData => [
             ...prevData,
-            { id: newRowId, values: {} } // Add new row with empty values
+            { id: newRowId, values: {} } 
         ]);
-        toast.info("hds")
+        toast.info("Row added")
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(rowData);
-        
-        axios.post("http://localhost:8000/postdata",
-        {
-            values : rowData,
-            tableName : selectedTableName
+        axios.post("http://localhost:8000/postdata", {
+            values: rowData,
+            tableName: selectedTableName
         })
-            .then(response => {
-                if(response.status === 202) {
-                    let val = response.data['message'] + " on row " + response.data['Rowcount']
-                    toast.error(val)
-    
-                } else {
-                    console.log("Data sent successfully:", response.data);
-                    toast.success('Data added')
+        .then(response => {
+            if(response.status === 202) {
+               
+                setKeys(response.data['keys'])
+                setValues(response.data['datas'])
+                let val = response.data['message'] + " on row " + response.data['Rowcount'] ;
+                toast.error(
+                    <div>
+                        <p>{val}</p>
+                    </div>
+                );
+            } else {
+                console.log("Data sent successfully:", response.data);
+                toast.success('Data added')
+                setTimeout(() => {
                     navigate('/');
-                   
-                }
-            })
-            .catch(error => {
-                console.error("Error sending data:", error);
-                toast.error('Someting went wrong')
-            });
+                }, 5000); 
+            }
+        })
+        .catch(error => {
+            console.error("Error sending data:", error);
+            toast.error('Something went wrong')
+        });
     };
-    
+    // const handleYes = (response) => {
+    //     console.log(key,values,'hejej');
+    //     axios.post("http://localhost:8000/updatedata", {
+    //         TableName: selectedTableName,
+    //         ColumnName : columnNames,
+    //         key : key,
+    //         datas : values
+    //     }).then(response => {
+    //         if(response.status === 200) {
+    //             toast.success('Data get updated')
+    //         } 
+    //     })
+    //     .catch(error => {
+    //         console.error("Error sending data:", error);
+    //         toast.error('Something went wrong')
+    //     });
+    // };
+
     
     return (
-        <div>
-             <Toaster position="top-right" richColors/>
+        <div style={{ display: 'flex', justifyContent: 'center' }}> 
+            <Toaster position="top-right" richColors/>
             <form onSubmit={handleSubmit}>
-                <div className="centered-content">
+                <div className="centered-content" style={{ width: '80%' }}> 
                     <table>
                         <thead>
                             <tr>
@@ -92,21 +117,27 @@ const AddColumn = () => {
                                 ))}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="text" style={{ marginLeft: '200px' }}>
                             {rowData.map((row, index) => (
                                 <tr key={row.id}>
                                     {columnNames.map(columnName => (
-                                        <td key={columnName}>
-                                            <TextField
-                                                value={row.values[columnName] || ''}
-                                                onChange={(event) => handleInputChange(row.id, columnName, event.target.value)}
-                                            />
+                                        <td key={columnName} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                                <Autocomplete
+                                                    value={row.values[columnName] || ''}
+                                                    onChange={(event, newValue) => handleInputChange(row.id, columnName, newValue)}
+                                                    onInputChange={(event, newInputValue) => handleInputChange(row.id, columnName, newInputValue)}
+                                                    options={suggestions[columnName] || []}
+                                                    freeSolo
+                                                    renderInput={(params) => <TextField {...params} style={{ width: '200px', height: '40px' ,marginTop:'20px'}} />} 
+                                                />
+                                            </div>
+
                                         </td>
                                     ))}
                                     {index === rowData.length - 1 && (
                                         <td>
-                                            <Button type="button" onClick={handleAddRow}>
-                                               
+                                            <Button className="addButton" type="button" onClick={handleAddRow} style={{marginTop:'30px'}}>
                                                 <AddCircleIcon />
                                             </Button>
                                         </td>
@@ -115,10 +146,9 @@ const AddColumn = () => {
                             ))}
                         </tbody>
                     </table>
-                    <Button type="submit" variant="contained">Submit</Button>
-                    </div>
-          
-                </form>
+                    <Button className="buttons" type="submit" variant="contained" style={{marginTop:'30px'}} >Submit</Button>
+                </div>
+            </form>
         </div>
     );
 };

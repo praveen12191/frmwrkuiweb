@@ -47,7 +47,7 @@ const Home = () => {
                         renderInput={(params) => <TextField {...params} label="Table Name" variant="outlined" />}
                     />
                     <div style={{ display: 'flex', gap: '10px' }}>
-                        <Button type="submit" variant="contained">Insert Value</Button>
+                        {/* <Button type="submit" variant="contained">Insert Value</Button> */}
                         <Button onClick={viewTable} variant="contained">View Table</Button>
                     </div>
                 </div>

@@ -5,6 +5,8 @@ import AddColumn from './components/AddColumn';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createContext, useEffect, useState } from "react"
 import ViewTable from './components/ViewTable';
+import DataEntry from './components/DataEntry';
+
 export const Context = createContext()
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/addColumn" element={<AddColumn />} />
           <Route path="/viewTable" element={<ViewTable />} />
+          <Route path="/entry" element={<DataEntry/>}/>
         </Routes>
       </div>
     </BrowserRouter>

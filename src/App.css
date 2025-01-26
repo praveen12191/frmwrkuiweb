@@ -1,3 +1,14 @@
+body {
+  background-color: #dbeaf2;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+
 .App {
   text-align: center;
 }
@@ -38,9 +49,8 @@
 }
 
 
-body{
-  background-color: rgb(250, 241, 241);
-}
+
+
 #tabelname {
   color: aliceblue;
   font-size: medium;
@@ -57,7 +67,7 @@ body{
   border: none;
   outline: none;
   width: 35%;
-  /* background-color: #c58acd; */
+  /* background-color: #c4d6e3; */
 }
 
 .centered-content {
@@ -92,15 +102,78 @@ body{
   width: 100%;
   border-collapse: collapse;
   border: 1px solid #ddd;
+  background-color: #f2f2f2;
 }
 
 .custom-table th,
 .custom-table td {
   padding: 8px;
   text-align: left;
+  color: #282c34;
   border: 1px solid #ddd;
 }
 
 .custom-table th {
-  background-color: #f2f2f2;
+  background-color: #94cae8;
+}
+
+
+.addButton{
+  color: white;
+  border: none;
+  background-color: transparent;
+  align-items: center;
+  margin-top: 200px;
+}
+
+.addButton:hover
+{
+  color: rgb(223, 223, 225);
+
+}  
+  .buttons
+  {
+    color: white;
+  border: none;
+  background-color: transparent;
+  align-items: center;
+
+  }
+
+  .columnNames
+  {
+    margin-top: 100px;
+  }
+.lable{
+  border-color: #282c34;
+  border: 2px solid rgb(19, 18, 18);
+}
+
+.d-flex
+{
+  display: flex;
+  justify-content:center
+}
+
+.icon
+{
+  align-items: end;
+  padding: 20px;
+}
+
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers children horizontally */
+}
+
+.custom-table {
+  margin-top: 20px;
+  width: 100%; /* Adjust the table width as needed */
+  border-collapse: collapse; /* Ensures borders are collapsed */
+}
+
+.custom-table th, .custom-table td {
+  padding: 10px; /* Adds space around cell content */
+  text-align: left; /* Aligns text to the left in cells */
 }
