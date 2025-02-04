@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Toast } from "bootstrap";
 
 const ViewTable = () => {
-  const getTable = "http://localhost:8000/columnName";
+  const getTable = "https://frmwrkuiserverq.onrender.com/columnName";
   const { selectedTableName } = useContext(Context);
   const [columnNames, setColumnNames] = useState([]);
   const [rowData, setRowData] = useState([]);
@@ -63,7 +63,7 @@ const ViewTable = () => {
   };
 
   const insertStatement = () => {
-    const url = "http://localhost:8000/InsertData";
+    const url = "https://frmwrkuiserverq.onrender.com/InsertData";
     axios
       .post(url, {
         TableName: selectedTableName,
@@ -92,11 +92,10 @@ const ViewTable = () => {
       "Are you sure you want to delete this row?"
     );
     console.log(idx);
-    
 
     if (userConfirmed) {
       let val = filteredRowData[idx];
-      let url = "http://localhost:8000/deleteValue";
+      let url = "https://frmwrkuiserverq.onrender.com/deleteValue";
 
       try {
         const res = await axios.post(url, {
@@ -105,8 +104,12 @@ const ViewTable = () => {
         });
 
         toast.success("Column Deleted");
-        setRowData((prevData) => prevData.filter((row, index) => JSON.stringify(row) !== JSON.stringify(val)))
-        
+        setRowData((prevData) =>
+          prevData.filter(
+            (row, index) => JSON.stringify(row) !== JSON.stringify(val)
+          )
+        );
+
         console.log(idx, rowData);
         setScripts(res.data.scripts);
         setIsPopupOpen(true);
@@ -118,7 +121,7 @@ const ViewTable = () => {
   };
 
   const handleSave = async (rowIndex) => {
-    let url = "http://localhost:8000/updateData";
+    let url = "https://frmwrkuiserverq.onrender.com/updateData";
     const oldData = filteredRowData[rowIndex];
     axios
       .post(url, {
@@ -168,7 +171,7 @@ const ViewTable = () => {
   };
 
   const handleSubmitNewRow = () => {
-    const url = "http://localhost:8000/InsertValue"; // Adjust the endpoint as needed
+    const url = "https://frmwrkuiserverq.onrender.com/InsertValue"; // Adjust the endpoint as needed
     console.log(selectedTableName, newRowData);
 
     axios
