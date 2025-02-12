@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Toast } from "bootstrap";
 
 const ViewTable = () => {
-  const getTable = "https://frmwrkuiserverq.onrender.com/columnName";
+  const getTable = "https://frmworkserver.onrender.com/columnName";
   const { selectedTableName } = useContext(Context);
   const [columnNames, setColumnNames] = useState([]);
   const [rowData, setRowData] = useState([]);
@@ -63,7 +63,7 @@ const ViewTable = () => {
   };
 
   const insertStatement = () => {
-    const url = "https://frmwrkuiserverq.onrender.com/InsertData";
+    const url = "https://frmworkserver.onrender.com/InsertData";
     axios
       .post(url, {
         TableName: selectedTableName,
@@ -95,7 +95,7 @@ const ViewTable = () => {
 
     if (userConfirmed) {
       let val = filteredRowData[idx];
-      let url = "https://frmwrkuiserverq.onrender.com/deleteValue";
+      let url = "https://frmworkserver.onrender.com/deleteValue";
 
       try {
         const res = await axios.post(url, {
@@ -121,7 +121,7 @@ const ViewTable = () => {
   };
 
   const handleSave = async (rowIndex) => {
-    let url = "https://frmwrkuiserverq.onrender.com/updateData";
+    let url = "https://frmworkserver.onrender.com/updateData";
     const oldData = filteredRowData[rowIndex];
     axios
       .post(url, {
@@ -171,7 +171,7 @@ const ViewTable = () => {
   };
 
   const handleSubmitNewRow = () => {
-    const url = "https://frmwrkuiserverq.onrender.com/InsertValue"; // Adjust the endpoint as needed
+    const url = "https://frmworkserver.onrender.com/InsertValue"; // Adjust the endpoint as needed
     console.log(selectedTableName, newRowData);
 
     axios

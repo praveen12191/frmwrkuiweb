@@ -6,7 +6,7 @@ import { Context } from "../App";
 
 const Home = () => {
   const [tableName, setTableName] = useState([]);
-  const getTable = "https://frmwrkuiserverq.onrender.com/tableName";
+  const getTable = "https://frmworkserver.onrender.com/tableName";
   const navigate = useNavigate();
   const { selectedTableName, setSelectedTableName } = useContext(Context);
 

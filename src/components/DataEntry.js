@@ -19,7 +19,7 @@ const DataEntry = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const url = "https://frmwrkuiserverq.onrender.com/columnDetail";
+    const url = "https://frmworkserver.onrender.com/columnDetail";
     axios
       .get(url)
       .then((response) => {
@@ -41,7 +41,7 @@ const DataEntry = () => {
   // const handleTableHover = (tableName) => {
   //     setHoveredTable(tableName);
   //     setIsLoading(true);
-  //     axios.post('https://frmwrkuiserverq.onrender.com/columnName', { tablename: tableName})
+  //     axios.post('https://frmworkserver.onrender.com/columnName', { tablename: tableName})
   //         .then(response => {
   //             const tableSuggestions = response.data['uniqueDate'];
   //             setSuggestions(prevSuggestions => ({
@@ -64,7 +64,7 @@ const DataEntry = () => {
     const previousData = formData[tableName]; // Get previous inputs like col1 value
 
     axios
-      .post("https://frmwrkuiserverq.onrender.com/columnDetails", {
+      .post("https://frmworkserver.onrender.com/columnDetails", {
         tablename: tableName,
         previousData: previousData, // Send previous column values
       })
@@ -105,7 +105,7 @@ const DataEntry = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("https://frmwrkuiserverq.onrender.com/submitData", formData)
+      .post("https://frmworkserver.onrender.com/submitData", formData)
       .then((response) => {
         if (response.status === 200) {
           setScripts(response.data.scripts);

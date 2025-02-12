@@ -8,7 +8,7 @@ import { Context } from "../App";
 import Autocomplete from "@mui/material/Autocomplete";
 
 const AddColumn = () => {
-  const getTable = "https://frmwrkuiserverq.onrender.com/columnName";
+  const getTable = "https://frmworkserver.onrender.com/columnName";
   const { selectedTableName } = useContext(Context);
   const [columnNames, setColumnNames] = useState([]);
   const [rowData, setRowData] = useState([{ id: 0, values: {} }]);
@@ -56,7 +56,7 @@ const AddColumn = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("https://frmwrkuiserverq.onrender.com/postdata", {
+      .post("https://frmworkserver.onrender.com/postdata", {
         values: rowData,
         tableName: selectedTableName,
       })
@@ -86,7 +86,7 @@ const AddColumn = () => {
   };
   // const handleYes = (response) => {
   //     console.log(key,values,'hejej');
-  //     axios.post("https://frmwrkuiserverq.onrender.com/updatedata", {
+  //     axios.post("https://frmworkserver.onrender.com/updatedata", {
   //         TableName: selectedTableName,
   //         ColumnName : columnNames,
   //         key : key,

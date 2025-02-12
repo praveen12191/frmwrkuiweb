@@ -15,7 +15,7 @@ const ScriptToast = ({ scripts }) => {
       });
   };
   const submitdata = () => {
-    let url = "https://frmwrkuiserverq.onrender.com/submitdata";
+    let url = "https://frmworkserver.onrender.com/submitdata";
     axios.post(url, {
       Scripts: scripts,
     });
